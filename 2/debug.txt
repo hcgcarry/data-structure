@@ -1,0 +1,3 @@
+arry=arry(錯誤 要用複製的
+檔案讀取
+fgets用NULL fscanf用EOF array別用*array[len]的形式 要用array[len][len]的形式

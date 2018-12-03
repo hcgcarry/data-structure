@@ -1,0 +1,3 @@
+makefile
+main:main.o(有main.o才會執行main下面的指令
+	gcc -o main main.o

@@ -1,0 +1,2 @@
+recursive要加斷點
+debug時一直出現要在define分號前面加括號... define不用加分號!!!

@@ -1,0 +1,10 @@
++apple
++banana
++lemon
++apple
++apple
+-lemon
++apple
+-apple
++lemon
++lemon
