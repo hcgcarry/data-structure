@@ -1,0 +1,1 @@
+char *guess(char *clue);
