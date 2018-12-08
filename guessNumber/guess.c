@@ -5,7 +5,8 @@
 #include<stdlib.h>
 #include<math.h>
 #define randCharSize 10 
-#define predictNumSize  78763
+//#define predictNumSize  78763
+#define predictNumSize  10
 #define padNumber "0000000000"
 int currentPredictSize=0,recordStep = 0;
 int durningTreeTravelPreGoodCount,durningTreeTravel=0;
