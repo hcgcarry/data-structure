@@ -5,8 +5,8 @@
 #include<stdlib.h>
 #include<math.h>
 #define randCharSize 10 
-#define predictNumSize  10
-#define padNumber "0003000000"
+#define predictNumSize  78763
+#define padNumber "0000000000"
 int currentPredictSize=0,recordStep = 0;
 int durningTreeTravelPreGoodCount,durningTreeTravel=0;
 int biasDueToCorrect = 0;
@@ -50,7 +50,7 @@ badListPtr createBadListElement(int indexOfPredict);
 DifferentStructPtr createDifferentStrucuElement(int goodDifferent , int deep);
 DifferentStructPtr curTreePtr ,buildTreeTmpPtr,diffTreeInitialPtr;
 void tuneThreeDigit(badListPtr root);
-int deleteBadListElement(badListPtr root, badListPtr parent, badListPtr deletedElement);
+void deleteBadListElement(badListPtr root, badListPtr parent, badListPtr deletedElement);
 
 int cutPadNum;
 int firstTimeBadListSizeLessthree = 0;
@@ -84,7 +84,8 @@ char *guess(char *clue){
 
 	}
 	printf("step %d ", recordStep);
-	printf("goodcount:%d ,goodDifferent: %d \n",goodCount, goodDifferent);
+	//printf("predict:%s ", predict);
+	printf("goodcount:%d ,goodDifferent: %d ",goodCount, goodDifferent);
 	
 	//initial predict and tree
 	if (recordStep ==0 ) {
@@ -314,41 +315,42 @@ char *guess(char *clue){
 		if (curTreePtr->end == 1) {
 			biasDueToCorrect = 0;
 			//tune bad sequence according tree result
-			int preStepHasDeletedRoot=0;
+			int preHasDeleted=0;
+			badListPtr tmp;
+			tmp = createBadListElement(-1);
+			sizeOfBadList--;
+			tmp->next = badListRoot;
+			badListRoot = tmp;
 			for (badListTmp = badListRoot, index = 0; index < 3; index=index+1) {
 				if (curTreePtr->goodElementPositionArray[index] == 1) {
 					//if pre have deleted root  or first time
-					if (preStepHasDeletedRoot == 1 || index==0) {
-						preStepHasDeletedRoot = deleteBadListElement(badListRoot, NULL, badListRoot);
-					}
-					else {
+						printf("delete no minus ");
 						deleteBadListElement(badListRoot, badListTmp, badListTmp->next);
-					}
+						preHasDeleted = 1;
 				}
 				else if (curTreePtr->goodElementPositionArray[index] == -1) {
-					//if pre have deleted root  or first time
-					if (preStepHasDeletedRoot == 1 || index==0) {
-						predict[badListTmp->indexOfPredict]=predictMinusDigit(predict[badListTmp->indexOfPredict]);
-						biasDueToCorrect++;
-						preStepHasDeletedRoot = deleteBadListElement(badListRoot, NULL, badListRoot);
-						badListTmp = badListRoot;
-					}
-					else {
+						printf("delete minus ");
 						predict[badListTmp->next->indexOfPredict]=predictMinusDigit(predict[badListTmp->next->indexOfPredict]);
 						biasDueToCorrect++;
 						deleteBadListElement(badListRoot, badListTmp, badListTmp->next);
+						preHasDeleted = 1;
 					}
-				}
 				//dosen't delete
 				else {
-					if (index != 0) {
-						badListTmp = badListTmp->next;
-					}
+					preHasDeleted = 0;
+
+				}
+				if (!preHasDeleted){
+					badListTmp = badListTmp->next;
 
 				}
 
 				
 			}
+			badListPtr tmp2;
+			tmp2 = badListRoot;
+			badListRoot = badListRoot->next;
+			free(tmp2);
 			//reposition curtreeptr
 			if (sizeOfBadList > 2) {
 				tuneThreeDigit(badListRoot);
@@ -371,7 +373,12 @@ char *guess(char *clue){
 
 	}
 
-
+	badListPtr tmp;
+	for (tmp = badListRoot; tmp != NULL; tmp = tmp->next) {
+	//	printf("%d->", tmp->indexOfPredict);
+	}
+		puts("");
+	//printf("sizeOfbadlist:%d ", sizeOfBadList);
 	preGoodCount = goodCount;
 	recordStep++;
 	
@@ -411,28 +418,34 @@ DifferentStructPtr createDifferentStrucuElement(int goodDifferent, int deep ) {
 
 
 badListPtr createBadListElement(int indexOfPredict) {
+	if (indexOfPredict != -1) {
+	//	printf("create bad element index :%d\n", indexOfPredict);
+
+	}
 	sizeOfBadList++;
 	badListPtr tmp;
 	tmp= malloc(sizeof(struct badList));
 	tmp->indexOfPredict = indexOfPredict;
+	tmp->next = NULL;
 	return tmp;
 }
-int deleteBadListElement(badListPtr root, badListPtr parent, badListPtr deletedElement) {
+void deleteBadListElement(badListPtr root, badListPtr parent, badListPtr deletedElement) {
 	//if which will be deleted is root
 	sizeOfBadList--;
-	int hasDeletedRoot = 0;
-	printf("dele index:%d\n", deletedElement->indexOfPredict);
+	if (deletedElement ->indexOfPredict != -1) {
+
+		printf("dele index:%d\n", deletedElement->indexOfPredict);
+	}
 	if (badListRoot== deletedElement){ 
 		badListRoot = badListRoot->next;
 		free(deletedElement);
-		hasDeletedRoot = 1;
 	}
 	else {
 		parent->next = deletedElement -> next;
 		free(deletedElement);
 	}
 	//return 1 if delete root
-	return hasDeletedRoot;
+
 }
 char predictAddDigit(char digit) {
 	char result;
