@@ -22,7 +22,7 @@ int main(void) {
 	//char *num = readBigNumberFromFile("bignumber.txt");
 	//sizeOfNum = strlen(num);
 	//char testnum[guessNumSize] = "0123456789";
-	char testnum[guessNumSize] = "9009835280";
+	char testnum[guessNumSize] = "0928132098";
 	
 	while (goodCount != guessNumSize) {
 		goodCount = 0;

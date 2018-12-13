@@ -85,8 +85,8 @@ char *guess(char *clue){
 
 	}
 	printf("step %d ", recordStep);
-	//printf("predict:%s ", predict);
-	printf("goodcount:%d ,goodDifferent: %d ",goodCount, goodDifferent);
+	printf("predict:%s ", predict);
+	printf("goodcount:%d ,goodDifferent: %d \n ",goodCount, goodDifferent);
 	
 	//initial predict and tree
 	if (recordStep ==0 ) {
@@ -214,7 +214,7 @@ char *guess(char *clue){
 
 		tmp = createDifferentStrucuElement(1, 3);
 		tmp->end = 1;
-		tmp->goodElementPositionArray[0] = 1;
+		tmp->goodElementPositionArray[0] = -1;
 		tmp->goodElementPositionArray[2] = 1;
 		buildTreeTmpPtr->oneALink= tmp;
 
@@ -376,10 +376,10 @@ char *guess(char *clue){
 
 	badListPtr tmp;
 	for (tmp = badListRoot; tmp != NULL; tmp = tmp->next) {
-	//	printf("%d->", tmp->indexOfPredict);
+		printf("%d->", tmp->indexOfPredict);
 	}
 		puts("");
-	//printf("sizeOfbadlist:%d ", sizeOfBadList);
+	printf("sizeOfbadlist:%d ", sizeOfBadList);
 	preGoodCount = goodCount;
 	recordStep++;
 	
