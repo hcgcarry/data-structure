@@ -5,8 +5,8 @@
 #include<stdlib.h>
 #include<math.h>
 #define randCharSize 10 
-//#define predictNumSize  78763
-#define predictNumSize  10
+#define predictNumSize  78763
+//#define predictNumSize  10
 #define padNumber "0000000000"
 int currentPredictSize=0,recordStep = 0;
 int durningTreeTravelPreGoodCount,durningTreeTravel=0;
@@ -85,8 +85,8 @@ char *guess(char *clue){
 
 	}
 	printf("step %d ", recordStep);
-	printf("predict:%s ", predict);
-	printf("goodcount:%d ,goodDifferent: %d \n ",goodCount, goodDifferent);
+	//printf("predict:%s \n", predict);
+	printf("goodcount:%d ,goodDifferent: %d  ",goodCount, goodDifferent);
 	
 	//initial predict and tree
 	if (recordStep ==0 ) {
@@ -284,7 +284,7 @@ char *guess(char *clue){
 			deleteBadListElement(badListRoot,NULL,badListRoot);
 		}
 		if (sizeOfBadList == 0) {
-			printf("finish ");
+			////printf("finish ");
 		}
 		//size == 1 or 2
 		else{
@@ -325,12 +325,12 @@ char *guess(char *clue){
 			for (badListTmp = badListRoot, index = 0; index < 3; index=index+1) {
 				if (curTreePtr->goodElementPositionArray[index] == 1) {
 					//if pre have deleted root  or first time
-						printf("delete no minus ");
+						//printf("delete no minus ");
 						deleteBadListElement(badListRoot, badListTmp, badListTmp->next);
 						preHasDeleted = 1;
 				}
 				else if (curTreePtr->goodElementPositionArray[index] == -1) {
-						printf("delete minus ");
+						//printf("delete minus ");
 						predict[badListTmp->next->indexOfPredict]=predictMinusDigit(predict[badListTmp->next->indexOfPredict]);
 						biasDueToCorrect++;
 						deleteBadListElement(badListRoot, badListTmp, badListTmp->next);
@@ -376,10 +376,10 @@ char *guess(char *clue){
 
 	badListPtr tmp;
 	for (tmp = badListRoot; tmp != NULL; tmp = tmp->next) {
-		printf("%d->", tmp->indexOfPredict);
+		//printf("%d->", tmp->indexOfPredict);
 	}
 		puts("");
-	printf("sizeOfbadlist:%d ", sizeOfBadList);
+	//printf("sizeOfbadlist:%d ", sizeOfBadList);
 	preGoodCount = goodCount;
 	recordStep++;
 	
@@ -389,7 +389,7 @@ char *guess(char *clue){
 
 
 void tuneThreeDigit(badListPtr root) {
-	printf("tune three\n");
+	//printf("tune three\n");
 	//tune three digit in one time
 	timeToTuneThree = 0;
 	predict[root->indexOfPredict]=predictAddDigit(predict[root->indexOfPredict]);
@@ -420,7 +420,7 @@ DifferentStructPtr createDifferentStrucuElement(int goodDifferent, int deep ) {
 
 badListPtr createBadListElement(int indexOfPredict) {
 	if (indexOfPredict != -1) {
-	//	printf("create bad element index :%d\n", indexOfPredict);
+	//	//printf("create bad element index :%d\n", indexOfPredict);
 
 	}
 	sizeOfBadList++;
@@ -435,7 +435,7 @@ void deleteBadListElement(badListPtr root, badListPtr parent, badListPtr deleted
 	sizeOfBadList--;
 	if (deletedElement ->indexOfPredict != -1) {
 
-		printf("dele index:%d\n", deletedElement->indexOfPredict);
+		//printf("dele index:%d\n", deletedElement->indexOfPredict);
 	}
 	if (badListRoot== deletedElement){ 
 		badListRoot = badListRoot->next;
